@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false,//以前我们需要使用babel来将ES6的模块语法转换为AMD, CommonJS，UMD之类的模块化标准语法，但是现在webpack都帮我做了这件事了，所以我们不需要babel来做，因此需要在babel配置项中设置modules为false，因为它默认值是commonjs, 否则的话，会产生冲突
+      },
+
+    ]
+  ],
+  "env": { //env 会同时检查 NODE_ENV 和 BABEL_ENV 并基于此向你的构建中添加功能
+    "development": {
+      "plugins": [
+        "annotate-console-log"
+      ]
+    }
+  }
+}

@@ -23,7 +23,9 @@ const commonConfig = merge([
                 path.join(__dirname, "node_modules")
             ]),
         ],
+
     },
+    parts.loadJavaScript({ include: PATHS.app }),
     // parts.loadCSS(),
 ]);
 
@@ -36,6 +38,12 @@ const productionConfig = merge([
     parts.purifyCSS({
         paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
     }),
+    parts.loadImages({
+        options: {
+            limit: 15000,
+            name: "[name].[ext]",
+        },
+    }),
 ]);
 
 const developmentConfig = merge([
@@ -45,10 +53,13 @@ const developmentConfig = merge([
         port: process.env.PORT,
     }),
     parts.loadCSS(),
+    parts.loadImages(),
+
 
 ]);
 
 module.exports = (mode) => {
+    process.env.BABEL_ENV = mode; //将webpack环境传递给Babel
     if (mode === "production") {
         return merge(commonConfig, productionConfig, { mode });
     }
